@@ -1,0 +1,32 @@
+/dts-v1/;
+/plugin/;
+/ {
+	compatible = "brcm,bcm2835";  
+
+	fragment@0 {
+		target = <&dsi1>;
+		__overlay__{
+			status = "okay";
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port {
+				dsi_out_port:endpoint {
+					remote-endpoint = <&panel_dsi_port>;
+				};
+			};
+
+			panel:panel@0 {
+				compatible    = "gcat,sn65_ws7d";
+				status        = "okay";
+				reg           = <0>;
+				//reset-gpios   = <&pca 2 0>; // fix me
+				//backlight = <&panel_backlight>;
+				port {
+					panel_dsi_port: endpoint {
+						remote-endpoint = <&dsi_out_port>;
+					};
+				};
+			};
+		};
+	};
+};
